@@ -1,0 +1,33 @@
+{
+    "appKeys": {
+        "KEY_DELAY": 1,
+        "KEY_LAST_STOP": 3,
+        "KEY_LAST_STOP_DT": 6,
+        "KEY_LAST_STOP_PF": 7,
+        "KEY_NEXT_STOP": 4,
+        "KEY_NEXT_STOP_DT": 8,
+        "KEY_NEXT_STOP_PF": 9,
+        "KEY_TRAIN_CODE": 5,
+        "KEY_TRAIN_ORIGIN": 0,
+        "KEY_UPDATED": 2
+    },
+    "capabilities": [
+        "configurable"
+    ],
+    "companyName": "francesco.lerro@gmail.com",
+    "longName": "inTreno",
+    "projectType": "native",
+    "resources": {
+        "media": []
+    },
+    "sdkVersion": "3",
+    "shortName": "inTreno",
+    "targetPlatforms": [
+        "basalt"
+    ],
+    "uuid": "e4b925b5-ad35-4854-bab0-40cc076aa40f",
+    "versionLabel": "1.0",
+    "watchapp": {
+        "watchface": false
+    }
+}
