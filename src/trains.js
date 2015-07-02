@@ -26,9 +26,10 @@ var refreshTrainInfo = function(trainId, cb) {
 };
 
 var epochToTime = function(dateTime) {
+	var pad = function (n) { return (n < 10) ? ('0' + n) : n };
 	if (!dateTime) return '-';	
-	var stopDateTime = new Date(dateTime);	
-	return stopDateTime.getHours() + ':' + stopDateTime.getMinutes();
+	var stopDateTime = new Date(dateTime);
+	return pad(stopDateTime.getHours()) + ':' + pad(stopDateTime.getMinutes()) ;
 };
 
 var locateTrain = function(trainId, startId) {
@@ -129,7 +130,7 @@ Pebble.addEventListener('showConfiguration', function(e) {
 
 Pebble.addEventListener('webviewclosed',
   function(e) {
-    var configuration = JSON.parse(decodeURIComponent(e.response));
+    configuration = JSON.parse(decodeURIComponent(e.response));
     console.log('Configuration window returned: ', JSON.stringify(configuration));
   }
 );

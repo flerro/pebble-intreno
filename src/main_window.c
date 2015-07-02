@@ -17,128 +17,132 @@
 static Window *s_window;
 static GFont s_res_gothic_18_bold;
 static GFont s_res_gothic_14;
-static GFont s_res_gothic_24;
+static GFont s_res_gothic_24_bold;
 static TextLayer *txt_train_origin;
 static TextLayer *txt_train_code;
-static TextLayer *txt_train_delay;
 static TextLayer *txt_update;
-static TextLayer *s_textlayer_2;
 static TextLayer *txt_last_stop;
-static TextLayer *s_textlayer_4;
 static TextLayer *txt_next_stop_dt;
 static TextLayer *txt_next_stop;
 static TextLayer *s_textlayer_1;
 static TextLayer *txt_next_stop_pf;
 static TextLayer *txt_last_stop_dt;
 static TextLayer *txt_last_stop_pf;
+static TextLayer *s_textlayer_2;
+static TextLayer *s_textlayer_3;
+static TextLayer *txt_train_delay;
 
 static void initialise_ui(void) {
   s_window = window_create();
   #ifndef PBL_SDK_3
-    window_set_fullscreen(s_window, 0);
+    window_set_fullscreen(s_window, true);
   #endif
   
   s_res_gothic_18_bold = fonts_get_system_font(FONT_KEY_GOTHIC_18_BOLD);
   s_res_gothic_14 = fonts_get_system_font(FONT_KEY_GOTHIC_14);
-  s_res_gothic_24 = fonts_get_system_font(FONT_KEY_GOTHIC_24);
+  s_res_gothic_24_bold = fonts_get_system_font(FONT_KEY_GOTHIC_24_BOLD);
   // txt_train_origin
-  txt_train_origin = text_layer_create(GRect(4, 15, 137, 21));
+  txt_train_origin = text_layer_create(GRect(5, 0, 134, 21));
   text_layer_set_text(txt_train_origin, "Firenze SMN");
   text_layer_set_font(txt_train_origin, s_res_gothic_18_bold);
   layer_add_child(window_get_root_layer(s_window), (Layer *)txt_train_origin);
   
   // txt_train_code
-  txt_train_code = text_layer_create(GRect(4, 1, 136, 16));
+  txt_train_code = text_layer_create(GRect(5, 20, 125, 16));
   text_layer_set_text(txt_train_code, "1234");
   text_layer_set_font(txt_train_code, s_res_gothic_14);
   layer_add_child(window_get_root_layer(s_window), (Layer *)txt_train_code);
   
-  // txt_train_delay
-  txt_train_delay = text_layer_create(GRect(2, 37, 137, 28));
-  text_layer_set_text(txt_train_delay, "ritardo 12 minuti");
-  text_layer_set_text_alignment(txt_train_delay, GTextAlignmentCenter);
-  text_layer_set_font(txt_train_delay, s_res_gothic_24);
-  layer_add_child(window_get_root_layer(s_window), (Layer *)txt_train_delay);
-  
   // txt_update
   txt_update = text_layer_create(GRect(111, 149, 30, 15));
-  text_layer_set_text(txt_update, "12:03");
   text_layer_set_text_alignment(txt_update, GTextAlignmentRight);
   text_layer_set_font(txt_update, s_res_gothic_14);
   layer_add_child(window_get_root_layer(s_window), (Layer *)txt_update);
   
-  // s_textlayer_2
-  s_textlayer_2 = text_layer_create(GRect(4, 77, 11, 20));
-  text_layer_set_text(s_textlayer_2, "^");
-  layer_add_child(window_get_root_layer(s_window), (Layer *)s_textlayer_2);
-  
   // txt_last_stop
-  txt_last_stop = text_layer_create(GRect(18, 65, 104, 16));
-  text_layer_set_text(txt_last_stop, "Bologna C.le A/V");
+  txt_last_stop = text_layer_create(GRect(22, 64, 104, 16));
+  text_layer_set_text(txt_last_stop, "-");
   text_layer_set_font(txt_last_stop, s_res_gothic_14);
   layer_add_child(window_get_root_layer(s_window), (Layer *)txt_last_stop);
   
-  // s_textlayer_4
-  s_textlayer_4 = text_layer_create(GRect(3, 105, 12, 20));
-  text_layer_set_text(s_textlayer_4, "N");
-  layer_add_child(window_get_root_layer(s_window), (Layer *)s_textlayer_4);
-  
   // txt_next_stop_dt
-  txt_next_stop_dt = text_layer_create(GRect(16, 122, 38, 20));
+  txt_next_stop_dt = text_layer_create(GRect(22, 121, 38, 20));
   text_layer_set_text(txt_next_stop_dt, "--:--");
   text_layer_set_font(txt_next_stop_dt, s_res_gothic_14);
   layer_add_child(window_get_root_layer(s_window), (Layer *)txt_next_stop_dt);
   
   // txt_next_stop
-  txt_next_stop = text_layer_create(GRect(18, 104, 112, 18));
-  text_layer_set_text(txt_next_stop, "Firenze SMN");
+  txt_next_stop = text_layer_create(GRect(21, 104, 112, 18));
+  text_layer_set_text(txt_next_stop, "-");
   text_layer_set_font(txt_next_stop, s_res_gothic_14);
   layer_add_child(window_get_root_layer(s_window), (Layer *)txt_next_stop);
   
   // s_textlayer_1
   s_textlayer_1 = text_layer_create(GRect(57, 149, 55, 18));
-  text_layer_set_text(s_textlayer_1, "Updated @");
+  text_layer_set_text(s_textlayer_1, "upd @");
+  text_layer_set_text_alignment(s_textlayer_1, GTextAlignmentRight);
   text_layer_set_font(s_textlayer_1, s_res_gothic_14);
   layer_add_child(window_get_root_layer(s_window), (Layer *)s_textlayer_1);
   
   // txt_next_stop_pf
-  txt_next_stop_pf = text_layer_create(GRect(85, 122, 42, 20));
+  txt_next_stop_pf = text_layer_create(GRect(86, 121, 42, 20));
   text_layer_set_text(txt_next_stop_pf, "-");
   text_layer_set_text_alignment(txt_next_stop_pf, GTextAlignmentRight);
   text_layer_set_font(txt_next_stop_pf, s_res_gothic_14);
   layer_add_child(window_get_root_layer(s_window), (Layer *)txt_next_stop_pf);
   
   // txt_last_stop_dt
-  txt_last_stop_dt = text_layer_create(GRect(20, 83, 44, 20));
+  txt_last_stop_dt = text_layer_create(GRect(23, 81, 44, 20));
   text_layer_set_text(txt_last_stop_dt, "--:--");
   text_layer_set_font(txt_last_stop_dt, s_res_gothic_14);
   layer_add_child(window_get_root_layer(s_window), (Layer *)txt_last_stop_dt);
   
   // txt_last_stop_pf
-  txt_last_stop_pf = text_layer_create(GRect(99, 82, 29, 20));
+  txt_last_stop_pf = text_layer_create(GRect(99, 81, 29, 20));
   text_layer_set_text(txt_last_stop_pf, "-");
   text_layer_set_text_alignment(txt_last_stop_pf, GTextAlignmentRight);
   text_layer_set_font(txt_last_stop_pf, s_res_gothic_14);
   layer_add_child(window_get_root_layer(s_window), (Layer *)txt_last_stop_pf);
+  
+  // s_textlayer_2
+  s_textlayer_2 = text_layer_create(GRect(5, 99, 9, 24));
+  text_layer_set_text(s_textlayer_2, ">");
+  text_layer_set_text_alignment(s_textlayer_2, GTextAlignmentCenter);
+  text_layer_set_font(s_textlayer_2, s_res_gothic_24_bold);
+  layer_add_child(window_get_root_layer(s_window), (Layer *)s_textlayer_2);
+  
+  // s_textlayer_3
+  s_textlayer_3 = text_layer_create(GRect(2, 60, 13, 24));
+  text_layer_set_text(s_textlayer_3, "<");
+  text_layer_set_text_alignment(s_textlayer_3, GTextAlignmentCenter);
+  text_layer_set_font(s_textlayer_3, s_res_gothic_24_bold);
+  layer_add_child(window_get_root_layer(s_window), (Layer *)s_textlayer_3);
+  
+  // txt_train_delay
+  txt_train_delay = text_layer_create(GRect(22, 39, 100, 20));
+  text_layer_set_text(txt_train_delay, "Text layer");
+  text_layer_set_text_alignment(txt_train_delay, GTextAlignmentCenter);
+  layer_add_child(window_get_root_layer(s_window), (Layer *)txt_train_delay);
 }
 
 static void destroy_ui(void) {
   window_destroy(s_window);
   text_layer_destroy(txt_train_origin);
   text_layer_destroy(txt_train_code);
-  text_layer_destroy(txt_train_delay);
   text_layer_destroy(txt_update);
-  text_layer_destroy(s_textlayer_2);
   text_layer_destroy(txt_last_stop);
-  text_layer_destroy(s_textlayer_4);
   text_layer_destroy(txt_next_stop_dt);
   text_layer_destroy(txt_next_stop);
   text_layer_destroy(s_textlayer_1);
   text_layer_destroy(txt_next_stop_pf);
   text_layer_destroy(txt_last_stop_dt);
   text_layer_destroy(txt_last_stop_pf);
+  text_layer_destroy(s_textlayer_2);
+  text_layer_destroy(s_textlayer_3);
+  text_layer_destroy(txt_train_delay);
 }
 // END AUTO-GENERATED UI CODE
+
 
 static void inbox_received_callback(DictionaryIterator *iterator, void *context) {
   // Read first item
